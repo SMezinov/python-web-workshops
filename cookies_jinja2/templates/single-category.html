@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../static/css/styles.css" type="text/css" rel="stylesheet">
+    {% from 'macros.html' import load_header, load_footer, load_products_table %}
+    <title>Tech Shop</title>
+</head>
+<body>
+    {{ load_header(get_user(request)) }}
+
+    <div>
+        <h1>Single Category - {{category.name}}</h1>
+
+        <div class="table_component-sc" role="region" tabindex="0">
+            {{ load_products_table(products = products, category = category) }}
+        </div>
+    </div>
+    {{ load_footer() }}
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../static/css/styles.css" type="text/css" rel="stylesheet">
+    <title>Tech Shop</title>
+</head>
+
+<body>
+
+    {% macro load_header(user = None) %}
+    <header>
+        <h2>Tech shop® header</h2>
+
+        <div class="main-nav">
+            <a href="/" class="nav-item">Home</a>
+            <a href="/products" class="nav-item">Products</a>
+            <a href="/categories" class="nav-item">Categories</a>
+            {% if user %}
+                <form action="/users/logout" method="post">
+                <button class="nav-item" type="submit">Logout</button>
+                 </form>
+            {% else %}
+                <a href="/users/login" class="nav-item">Login</a>
+                <a href="/users/register" class="nav-item">Register</a>
+            {% endif %}
+
+
+        </div>
+    </header>
+            {% if user %}
+            <p class="user-greeting">
+                Hello <a href="/users/info">{{ user.username }}</a>
+            </p>
+            {% endif %}
+    {% endmacro %}
+
+    {% macro load_products_table(products, categories = None, category = None) %}
+    {% if products %}
+    {% if not categories %}
+    <tr>
+        <h2>{{ products|length }} products in {{ category.name }}</h2>
+    </tr>
+    {% endif %}
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        {% for cat_id, product_groups in products|groupby('category_id') %}
+        {% if categories %}
+        <tr>
+            <td colspan="3" style="text-align: center; font-size: 2rem;">
+                <a href="/categories/{{cat_id}}">{{categories[cat_id].name}}</a>
+            </td>
+        </tr>
+        {% endif %}
+        {% for product in product_groups|sort(attribute='price') %}
+        <tr>
+            <td>
+                <a href="/products/{{product.id}}">{{product.name}}</a>
+            </td>
+            <td>{{product.description}}</td>
+            <td>{{product.price}}</td>
+        </tr>
+        {% endfor %}
+        {% endfor %}
+    </table>
+    {% else %}
+    <h1 style="color: red;">No products in this category yet</h1>
+    {% endif %}
+    {% endmacro %}
+
+    {% macro load_footer() %}
+    <footer>
+        <h2>Tech shop® footer</h2>
+    </footer>
+    {% endmacro %}
+</body>
+
+</html>
+
+{% macro user_form(action, button_text, error=None) %}
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+         <form action="{{ action }}" method="post">
+            <div class="grid-container-lr">
+                <fieldset>
+                    <input name="username" type="text" placeholder="Username" required>
+                </fieldset>
+                <fieldset>
+                    <input name="password" type="password" placeholder="Password" required>
+                </fieldset>
+                <fieldset>
+                    <button type="submit">{{ button_text }}</button>
+                </fieldset>
+            </div>
+        </form>
+{% endmacro %}
