@@ -1,0 +1,59 @@
+{% macro load_header() %}
+    <header>
+        <h2>Tech shop® header</h2>
+        <div class="main-nav">
+            <a href="/" class="nav-item">Home</a>
+            <a href="/products" class="nav-item">Products</a>
+            <a href="/categories" class="nav-item">Categories</a>
+            <a href="login.html" class="nav-item">Login</a>
+            <a href="register.html" class="nav-item">Register</a>
+        </div>
+    </header>
+{% endmacro %}
+
+
+{% macro load_footer() %}
+            <footer>
+        <h2>Tech shop® footer</h2>
+    </footer>
+{% endmacro %}
+
+{% macro load_products_table(products, categories=None, category=None) %}
+    {% if products %}
+        {% if not categories %}
+            <p>{{ products | length }} products in {{ category.name }}</p>
+        {% endif %}
+        <div class="table_component-p" role="region" tabindex="0">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cat_id, product_groups in products|groupby('category_id') %}
+                        {% if categories %}
+                            <tr>
+                            <td colspan="3">{{ categories[cat_id].name }}</td>
+                            </tr>
+                        {% endif %}
+                        {% for product in product_groups|sort(attribute='price') %}
+                    <tr>
+                        <td>
+                            <a href="/products/{{product.id}}">{{product.name}}</a>
+                        </td>
+                        <td>{{product.description}}</td>
+                        <td>{{product.price}}</td>
+                    </tr>
+                    {% endfor %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+    <p>No products in this Category</p>
+    {% endif %}
+
+{% endmacro %}

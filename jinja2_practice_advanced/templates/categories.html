@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../static/css/styles.css" type="text/css" rel="stylesheet">
+    {% from 'macros.html' import load_header, load_footer %}
+    <title>Tech Shop</title>
+</head>
+<body>
+    {{ load_header() }}
+
+    <h1>All Categories</h1>
+
+    <div class="grid-container-c">
+        {% for category in categories %}
+        <a href="/categories/{{category.id}}">
+            <div class="grid-item-c">
+                <h1>{{category.name}}</h1>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+
+   {{ load_footer() }}
+</body>
+</html>
