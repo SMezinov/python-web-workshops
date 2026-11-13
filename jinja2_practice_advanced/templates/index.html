@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../static/css/styles.css" type="text/css" rel="stylesheet">
+    {% from 'macros.html' import load_header, load_footer %}
+    <title>Tech Shop</title>
+</head>
+<body>
+    {{ load_header() }}
+
+    <div class="grid-container-index">
+        <a href="">
+            <div class="grid-item-index">
+                <h1>On sale!</h1>
+                <img src="../static/images/sale.gif">
+            </div>
+        </a>
+        <a href="/products">
+            <div class="grid-item-index">
+                <h1>All products</h1>
+                <img src="../static/images/products.jpg">
+            </div>
+        </a>
+        <a href="/categories">
+            <div class="grid-item-index">
+                <h1>All categories</h1>
+                <img src="../static/images/categories.jpg">
+            </div>
+        </a>
+        <a href="">
+            <div class="grid-item-index">
+                <h1>Contact us</h1>
+                <img src="../static/images/contact.jpg">
+            </div>
+        </a>
+    </div>
+
+    {{ load_footer() }}
+</body>
+</html>
